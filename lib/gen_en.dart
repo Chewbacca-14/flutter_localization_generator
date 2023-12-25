@@ -2,10 +2,14 @@ import 'dart:io';
 
 void genEn(String filePath) {
   Directory current = Directory.current;
-  String currentclear =
-      current.toString().replaceAll('Directory:', '').replaceAll('\'', '');
+  String currentclear = current
+      .toString()
+      .replaceAll('Directory:', '')
+      .replaceAll('\'', '')
+      .replaceAll(' ', '');
   String path = '${currentclear}\\lib';
   var outputFilePath = path;
+  print(path);
 
   try {
     var file = File(filePath);
