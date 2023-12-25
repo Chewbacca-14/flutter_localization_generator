@@ -1,34 +1,31 @@
-Dart package for generating .arb localization files.
+#FileARBGen
+FileARBGen is a Dart package for generating .arb localization files in Flutter. It simplifies the process of creating and maintaining localization files based on a provided .txt file.
 
-ATTENTION!
+How to Use
+Add this repository to the dependencies in your Flutter project:
 
-You should have a ready-made .txt file with localization in . The first value is the key, the second value is the translation in another language, the third value is the text in English.
-All values ​​must be in double brackets and there must be a semicolon between them.
-Between individual rows in the file there must be 2 empty lines.
-
-yourtanslatefile.txt
-
-"welcome";"Добро пожаловать";"Welcome"
-
-
-"hellow";"Привет Мир";"Hello World"
-
-
-How to use?
-
-1. Add this repository to the dependencies in your flutter project
-
+yaml
+Copy code
 dependencies:
   filearbgen:
-    git:
-      url: https://github.com/Chewbacca-14/filearbgen.git
+    git: https://github.com/Chewbacca-14/filearbgen.git
+Run the following command in the Terminal:
 
-2. Run command in the Terminal
+bash
+Copy code
+dart run filearbgen --filepath <path_to_your_translate_file.txt> --languagecode <language_code> --type <en/other>
+--filepath: Path to your file with translations.
+--languagecode: Language code for the translation (e.g., 'en' for English).
+--type: Use 'en' if you are creating a standard English translation file. Use 'other' if you are creating additional translation files.
+Translation File Format
+Your translation file (e.g., yourtranslatefile.txt) should have the following format:
 
-dart run filearbgen --filepath C:\Users\Max\Downloads\translate.txt --languagecode test --type en
+txt
+Copy code
+"welcome";"Добро пожаловать";"Welcome"
 
---filepath - path to the your file with translate
+"helloworld";"Привет Мир";"Hello World"
+Ensure that all values are enclosed in double brackets and separated by semicolons. Additionally, there should be two empty lines between individual rows in the file.
 
---languagecode - language code for which you are translating (if you are making the main file in English, use en)
+Feel free to customize and use this package to streamline your Flutter localization process!
 
---type - en / other. Use en if you are creating a standard English translation file and if you are creating additional translation files, use other
