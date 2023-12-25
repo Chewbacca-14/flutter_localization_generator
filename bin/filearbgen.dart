@@ -6,7 +6,7 @@ void genEn(String inputFilePath) {
 
   // Укажите имя файла и путь, где вы хотите его создать
   String fileName = 'entest.arb';
-  String filePath = '$currentPath/$fileName';
+  String filePath = '$currentPath\\lib/$fileName';
 
   var outputFilePath = filePath;
 
