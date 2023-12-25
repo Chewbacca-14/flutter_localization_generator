@@ -1,25 +1,17 @@
-// gen_en.dart
 import 'dart:io';
-
 import 'package:args/args.dart';
 
-void genEn(String filePath) {
+void genEn(String inputFilePath) {
   String currentPath = Directory.current.path;
 
   // Укажите имя файла и путь, где вы хотите его создать
-  // String lidir = 'lib';
   String fileName = 'entest.arb';
   String filePath = '$currentPath/$fileName';
-
-  // var outputDirectory = Directory(path);
-  // if (!outputDirectory.existsSync()) {
-  //   outputDirectory.createSync(recursive: true);
-  // }
 
   var outputFilePath = filePath;
 
   try {
-    var file = File(filePath);
+    var file = File(inputFilePath); // Use the function parameter here
     var contents = file.readAsStringSync();
 
     var blocks = contents.split('\n');
@@ -72,37 +64,8 @@ void main(List<String> arguments) {
     }
 
     // Call the function to generate language files
-    // genLanguageFiles(filePath);
     genEn(filePath);
   } catch (e) {
     print('Error parsing command line arguments: $e');
   }
 }
-
-// void genLanguageFiles(String filePath) {
-//   genEn(filePath);
-// }
-
-
-// try {
-  //   var file = File(filePath);
-  //   var contents = file.readAsStringSync();
-
-  //   // Replace this with your actual logic for processing language files
-  //   // For example, you might split the contents into lines and process each line
-  //   // ...
-
-  //   // Example: Writing processed contents to a new file in the Downloads folder
-  //   var outputFileName = 'language.arb';
-  //   var outputDirectory = Directory('Downloads');
-  //   if (!outputDirectory.existsSync()) {
-  //     outputDirectory.createSync();
-  //   }
-
-  //   var outputFile = File('${outputDirectory.path}/$outputFileName');
-  //   outputFile.writeAsStringSync(contents);
-
-  //   print('Language file successfully created in the Downloads folder.');
-  // } catch (e) {
-  //   print('Error reading/writing files: $e');
-  // }
