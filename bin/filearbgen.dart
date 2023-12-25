@@ -10,12 +10,12 @@ void genEn(String filePath) {
       .replaceAll('Directory:', '')
       .replaceAll('\'', '')
       .replaceAll(' ', '');
-  String path = '${currentClear}\\lib';
+  String path = '${currentClear}\lib';
 
-  var outputDirectory = Directory(path);
-  if (!outputDirectory.existsSync()) {
-    outputDirectory.createSync(recursive: true);
-  }
+  // var outputDirectory = Directory(path);
+  // if (!outputDirectory.existsSync()) {
+  //   outputDirectory.createSync(recursive: true);
+  // }
 
   var outputFilePath = '$path/en.arb';
 
