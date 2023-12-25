@@ -4,20 +4,19 @@ import 'dart:io';
 import 'package:args/args.dart';
 
 void genEn(String filePath) {
-  Directory current = Directory.current;
-  String currentClear = current
-      .toString()
-      .replaceAll('Directory:', '')
-      .replaceAll('\'', '')
-      .replaceAll(' ', '');
-  String path = '${currentClear}\\lib';
+  String currentPath = Directory.current.path;
+
+  // Укажите имя файла и путь, где вы хотите его создать
+  // String lidir = 'lib';
+  String fileName = 'entest.arb';
+  String filePath = '$currentPath/$fileName';
 
   // var outputDirectory = Directory(path);
   // if (!outputDirectory.existsSync()) {
   //   outputDirectory.createSync(recursive: true);
   // }
 
-  var outputFilePath = path;
+  var outputFilePath = filePath;
 
   try {
     var file = File(filePath);
@@ -51,8 +50,10 @@ void genEn(String filePath) {
 
     outputSink.write('}\n');
     outputSink.close();
+    File filefile = File(filePath);
+    filefile.createSync();
 
-    print('Файл en.arb успешно создан: $outputFilePath');
+    print('Файл testen.arb успешно создан: $outputFilePath');
   } catch (e) {
     print('Ошибка при чтении/записи файла: $e');
   }
