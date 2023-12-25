@@ -7,7 +7,7 @@ void genEn(String filePath) {
       .replaceAll('Directory:', '')
       .replaceAll('\'', '')
       .replaceAll(' ', '');
-  String path = '${currentclear}\\lib';
+  String path = '${currentclear}\lib';
   var outputFilePath = path;
   print(path);
 
