@@ -102,5 +102,30 @@ dart run filearbgen --filepath C:\Users\Max\Downloads\translate.txt --languageco
 }
 ```
 
+<br/>
+
+
+**ATTENTION. AFTER GENERATING THE FILES, DO NOT FORGET TO ERASE THE LAST COMMA IN EACH FILE. THIS ERROR WILL BE CORRECTED LATER**
+
+```dart
+{
+ "welcome": "Welcome",
+ "@welcome": {
+   "description": "Добро пожаловать"
+ },
+ "helloworld": "Hello World",
+ "@helloworld": {
+   "description": "Привет Мир"
+ }, <-- **THIS**
+}
+```
+
+```dart
+{
+ "welcome":"Добро пожаловать",
+ "helloworld":"Привет Мир",  <-- **THIS**
+}
+```
+
 __**Feel free to customize and use this package to streamline your Flutter localization process!**__
 
