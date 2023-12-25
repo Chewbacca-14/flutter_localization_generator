@@ -72,15 +72,16 @@ void main(List<String> arguments) {
     }
 
     // Call the function to generate language files
-    genLanguageFiles(filePath);
+    // genLanguageFiles(filePath);
+    genEn(filePath);
   } catch (e) {
     print('Error parsing command line arguments: $e');
   }
 }
 
-void genLanguageFiles(String filePath) {
-  genEn(filePath);
-}
+// void genLanguageFiles(String filePath) {
+//   genEn(filePath);
+// }
 
 
 // try {
