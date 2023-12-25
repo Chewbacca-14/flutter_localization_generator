@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:args/args.dart';
+import 'package:filearbgen/gen_en.dart';
 
 void main(List<String> arguments) {
   final parser = ArgParser()..addOption('file', abbr: 'f', mandatory: true);
@@ -21,16 +22,27 @@ void main(List<String> arguments) {
 }
 
 void genLanguageFiles(String filePath) {
-  // Modify the rest of your code accordingly
-  try {
-    var file = File(filePath);
-    var contents = file.readAsStringSync();
+  genEn(filePath);
+  // try {
+  //   var file = File(filePath);
+  //   var contents = file.readAsStringSync();
 
-    // The rest of your existing code for processing language files
-    // ...
+  //   // Replace this with your actual logic for processing language files
+  //   // For example, you might split the contents into lines and process each line
+  //   // ...
 
-    print('Language files successfully created in the lib folder.');
-  } catch (e) {
-    print('Error reading/writing files: $e');
-  }
+  //   // Example: Writing processed contents to a new file in the Downloads folder
+  //   var outputFileName = 'language.arb';
+  //   var outputDirectory = Directory('Downloads');
+  //   if (!outputDirectory.existsSync()) {
+  //     outputDirectory.createSync();
+  //   }
+
+  //   var outputFile = File('${outputDirectory.path}/$outputFileName');
+  //   outputFile.writeAsStringSync(contents);
+
+  //   print('Language file successfully created in the Downloads folder.');
+  // } catch (e) {
+  //   print('Error reading/writing files: $e');
+  // }
 }
