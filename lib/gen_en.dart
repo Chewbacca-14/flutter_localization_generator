@@ -46,7 +46,7 @@ void genEn(String filePath) {
 
     print('Файл en.arb успешно создан: $outputFilePath');
   } catch (e) {
-    print('Ошибка при чтении/записи файла: $e');
+    print('Ошибка пр чтении/записи файла: $e');
   }
 }
 //gg

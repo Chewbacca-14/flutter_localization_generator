@@ -5,14 +5,19 @@ import 'package:args/args.dart';
 
 void genEn(String filePath) {
   Directory current = Directory.current;
-  String currentclear = current
+  String currentClear = current
       .toString()
       .replaceAll('Directory:', '')
       .replaceAll('\'', '')
       .replaceAll(' ', '');
-  String path = '${currentclear}\\lib';
-  var outputFilePath = '$path/en.arb'; // Include the file name
-  print(path);
+  String path = '${currentClear}\\lib';
+
+  var outputDirectory = Directory(path);
+  if (!outputDirectory.existsSync()) {
+    outputDirectory.createSync(recursive: true);
+  }
+
+  var outputFilePath = '$path/en.arb';
 
   try {
     var file = File(filePath);
@@ -75,6 +80,7 @@ void main(List<String> arguments) {
 void genLanguageFiles(String filePath) {
   genEn(filePath);
 }
+
 
 // try {
   //   var file = File(filePath);
