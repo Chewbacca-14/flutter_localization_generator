@@ -1,2 +1,3 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+To run pub from the Git repository, run:
+
+    dart bin/pub.dart

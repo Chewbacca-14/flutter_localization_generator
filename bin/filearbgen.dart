@@ -19,7 +19,7 @@ void main(List<String> arguments) {
     }
     if (type == 'en') {
       genEn(filePath, outputFileName);
-    } else if (type == 'en') {
+    } else if (type == 'other') {
       genOther(filePath, outputFileName);
     } else {
       print('Type error, please write type en or other');
