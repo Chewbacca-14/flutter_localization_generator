@@ -1,4 +1,4 @@
-# FileARBGen
+# 🖥️ FileARBGen
 
 
 FileARBGen is a Dart package for generating .arb localization files in Flutter. It simplifies the process of creating and maintaining localization files based on a provided .txt file.
@@ -30,16 +30,17 @@ dart run filearbgen --filepath <path_to_your_translate_file.txt> --languagecode 
 
 ## Translation File Format
 Your translation file (e.g., yourtranslatefile.txt) should have the following format:
+
 <br/>
+
 **Example of translate.txt**
 ```bash
-"welcome";"Добро пожаловать";"Welcome"
+welcome;Добро пожаловать;Welcome
 
-"helloworld";"Привет Мир";"Hello World"
+helloworld;Привет Мир;Hello World
 ```
-- Ensure that all values are enclosed in double brackets and separated by semicolons.
+- Ensure that all values are separated by semicolons (;).
 
-- There should be two empty lines between individual rows in the file.
   
 <br/>
 
@@ -50,9 +51,9 @@ Your translation file (e.g., yourtranslatefile.txt) should have the following fo
 **translate.txt**
 
 ```bash
-"welcome";"Добро пожаловать";"Welcome"
+welcome;Добро пожаловать;Welcome
 
-"helloworld";"Привет Мир";"Hello World"
+helloworld;Привет Мир;Hello World
 ```
 
 **RUN**
