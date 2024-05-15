@@ -7,11 +7,12 @@ void genEn({
 }) {
   // Create an empty file at the specified path
   File filefile = File(filePath);
+  filefile.createSync();
+  var outputSink = filefile.openWrite();
 
   try {
     // Create the file
-    filefile.createSync();
-    var outputSink = filefile.openWrite();
+
     // Construct the full file path for the file gen
     String currentPath = Directory.current.path;
     String fileName = 'app_$languageCode.arb';
@@ -23,7 +24,6 @@ void genEn({
     // Split the contents into blocks based on line breaks
     var blocks = contents.split('\n');
     // Create a new output file and open a write stream
-    var outputFile = File(filePath);
 
     // Write the initial opening brace for the JSON object
     outputSink.write('{\n');
