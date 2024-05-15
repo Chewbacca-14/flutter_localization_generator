@@ -83,7 +83,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "58f72375b3b705819a23513be6dd91cb4bfe3cbf"
+      resolved-ref: "8f2353af1d4abe3fded28506b485a701d9563d87"
       url: "https://github.com/Chewbacca-14/filearbgen.git"
     source: git
     version: "1.1.0"

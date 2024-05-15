@@ -19,7 +19,7 @@ void main(List<String> arguments) {
     final results = parser.parse(arguments);
     // Extract values from the parsed results
 
-    final filePath = results['filepath'] as String;
+    final filePath = results['filePath'] as String;
     final languageCode = results['languageCode'] as String;
     final type = results['type'] as String;
     final splitElement = results['splitElement'] as String;
