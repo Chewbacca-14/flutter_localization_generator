@@ -5,27 +5,29 @@ void genEn({
   required String languageCode,
   required String splitElement,
 }) {
-  // Get the current working directory (project directory)
-  String currentPath = Directory.current.path;
-  // Create a file name based on the language code
-  String fileName = 'app_$languageCode.arb';
-  // Construct the full file path for the file gen
-  String filePath = '$currentPath\\lib/$fileName';
   // Create an empty file at the specified path
   File filefile = File(filePath);
 
   try {
+    // Create the file
+    filefile.createSync();
+
+    // Construct the full file path for the file gen
+    String currentPath = Directory.current.path;
+    String fileName = 'app_$languageCode.arb';
+    String fullPath = '$currentPath/lib/$fileName';
+
     // Read the contents of the input translation file
-    var file = File(filePath);
+    var file = File(fullPath);
     var contents = file.readAsStringSync();
     // Split the contents into blocks based on line breaks
     var blocks = contents.split('\n');
     // Create a new output file and open a write stream
     var outputFile = File(filePath);
     var outputSink = outputFile.openWrite();
-// Write the initial opening brace for the JSON object
+    // Write the initial opening brace for the JSON object
     outputSink.write('{\n');
-// Process each block in the translation file
+    // Process each block in the translation file
     for (var block in blocks) {
       // Check if the block is the last block in the file
       bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
@@ -55,7 +57,7 @@ void genEn({
     outputSink.write('}\n');
     // Close the output stream
     outputSink.close();
-    filefile.createSync();
+
     // Print a success message
     print('File generated successfully: $filePath');
   } catch (e) {
