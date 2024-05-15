@@ -11,7 +11,9 @@ void genEn({
   String fileName = 'app_$languageCode.arb';
   // Construct the full file path for the file gen
   String filePath = '$currentPath\\lib/$fileName';
-
+  // Create an empty file at the specified path
+  File filefile = File(filePath);
+  filefile.createSync();
   try {
     // Read the contents of the input translation file
     var file = File(filePath);
@@ -53,9 +55,7 @@ void genEn({
     outputSink.write('}\n');
     // Close the output stream
     outputSink.close();
-    // Create an empty file at the specified path
-    File filefile = File(filePath);
-    filefile.createSync();
+
     // Print a success message
     print('File generated successfully: $filePath');
   } catch (e) {
