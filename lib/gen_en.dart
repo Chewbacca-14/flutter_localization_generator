@@ -5,29 +5,54 @@ void genEn({
   required String languageCode,
   required String splitElement,
 }) {
-  // Construct the full file path for the file gen
-  String currentPath = Directory.current.path;
-  String fileName = 'app_$languageCode.arb';
-  String fullPath = '$currentPath/lib/$fileName';
+  // Create an empty file at the specified path
+  File filefile = File(filePath);
 
   try {
+    // Create the file
+    filefile.createSync();
+    var outputSink = filefile.openWrite();
+    // Construct the full file path for the file gen
+    String currentPath = Directory.current.path;
+    String fileName = 'app_$languageCode.arb';
+    String fullPath = '$currentPath/lib/$fileName';
+
+    // Read the contents of the input translation file
+    var file = File(fullPath);
+    var contents = file.readAsStringSync();
+    // Split the contents into blocks based on line breaks
+    var blocks = contents.split('\n');
     // Create a new output file and open a write stream
     var outputFile = File(filePath);
-    var outputSink = outputFile.openWrite();
+
     // Write the initial opening brace for the JSON object
     outputSink.write('{\n');
+    // Process each block in the translation file
+    for (var block in blocks) {
+      // Check if the block is the last block in the file
+      bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
+      // Check if the block is not empty
+      if (block.trim().isNotEmpty) {
+        // Split the block into lines based on semicolons
+        var lines = block.split(splitElement);
+        // Check if the line has the expected number of values (3)
+        if (lines.length == 3) {
+          // Extract key, Other language translation, and English translation
+          var key = lines[0].trim().replaceAll('"', '');
+          var otherLang = lines[1].trim().replaceAll('"', '');
+          var english = lines[2].trim().replaceAll('"', '');
 
-    // Process each block (you can replace this with your logic)
-    // For demonstration purposes, writing a sample block
-    outputSink.write('"key1": "English Translation 1",\n');
-    outputSink.write('"@key1": {\n');
-    outputSink.write('  "description": "Other language translation 1"\n');
-    outputSink.write('},\n');
-    outputSink.write('"key2": "English Translation 2",\n');
-    outputSink.write('"@key2": {\n');
-    outputSink.write('  "description": "Other language translation 2"\n');
-    outputSink.write('}\n');
-
+          // Write the English translation to the output file (type en)
+          outputSink.write(' "$key": "$english",\n');
+          outputSink.write(' "@$key": {\n');
+          outputSink.write('   "description": "$otherLang"\n');
+          isLastBlock ? outputSink.write(' }\n') : outputSink.write(' },\n');
+        } else {
+          // If the block does not have the expected format, print an error
+          outputSink.write('Incorrect translation file format: $block\n');
+        }
+      }
+    }
     // Write the closing brace for the JSON object
     outputSink.write('}\n');
     // Close the output stream
@@ -36,7 +61,7 @@ void genEn({
     // Print a success message
     print('File generated successfully: $filePath');
   } catch (e) {
-    // Handle any errors that occur during file writing
-    print('Error writing file: $e');
+    // Handle any errors that occur during file reading/writing
+    print('Error reading/writing file: $e');
   }
 }
