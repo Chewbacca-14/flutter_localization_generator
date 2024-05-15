@@ -1,16 +1,18 @@
 import 'dart:io';
 import 'package:args/args.dart';
-import 'package:filearbgen/gen_en.dart';
-import 'package:filearbgen/gen_other.dart';
+import 'package:flutter_localization_generator/gen_en.dart';
+import 'package:flutter_localization_generator/gen_other_languages.dart';
 
 void main(List<String> arguments) {
   final parser = ArgParser()
     //filepath - path to the translation file
-    ..addOption('filepath', abbr: 'f', mandatory: true)
+    ..addOption('filePath', abbr: 'f', mandatory: true)
     //language code to create the file name
-    ..addOption('languagecode', abbr: 'l', defaultsTo: 'app_langcode.arb')
+    ..addOption('languageCode', abbr: 'l', defaultsTo: 'app_langcode.arb')
     //generation type. en for the main file, other for additional
-    ..addOption('type', abbr: 't', defaultsTo: 'en');
+    ..addOption('type', abbr: 't', defaultsTo: 'en')
+    // splitElement is used to split translated word with English words
+    ..addOption('splitElement', abbr: 's', mandatory: true);
 
   try {
     // Parse the command line arguments
@@ -18,23 +20,31 @@ void main(List<String> arguments) {
     // Extract values from the parsed results
 
     final filePath = results['filepath'] as String;
-    final outputFileName = results['languagecode'] as String;
+    final languageCode = results['languageCode'] as String;
     final type = results['type'] as String;
+    final splitElement = results['splitElement'] as String;
 
     // Check if the file at the specified path exists
     if (!File(filePath).existsSync()) {
-      print('File not found: $filePath');
+      print('[File Path error] file not found: $filePath');
       return;
     }
     // Check the value of the 'type' option. en for the main file, other for additional
+
     if (type == 'en') {
-      genEn(filePath, outputFileName);
+      genEn(
+          filePath: filePath,
+          languageCode: languageCode,
+          splitElement: splitElement);
     } else if (type == 'other') {
-      genOther(filePath, outputFileName);
+      genOther(
+          inputFilePath: filePath,
+          languageCode: languageCode,
+          splitElement: splitElement);
     } else {
-      print('Type error. Please write en or other');
+      print('[Type error] please write en or other');
     }
   } catch (e) {
-    print('Error parsing command line arguments: $e');
+    print('[Parsing error] error parsing command line arguments: $e');
   }
 }

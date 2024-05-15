@@ -1,6 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 
-void genOther(String inputFilePath, String languageCode) {
+void genOther({
+  required String inputFilePath,
+  required String languageCode,
+  required String splitElement,
+}) {
   // Get the current working directory
   String currentPath = Directory.current.path;
 
@@ -27,19 +32,23 @@ void genOther(String inputFilePath, String languageCode) {
 
     // Process each block in the translation file
     for (var block in blocks) {
+      // Check if the block is the last block in the file
+      bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
       // Check if the block is not empty
       if (block.trim().isNotEmpty) {
         // Split the block into lines based on semicolons
-        var lines = block.split(';');
+        var lines = block.split(splitElement);
 
         // Check if the block has the expected number of lines (3)
         if (lines.length == 3) {
-          // Extract key and Russian translation
+          // Extract key and translation
           var key = lines[0].trim().replaceAll('"', '');
           var otherLang = lines[1].trim().replaceAll('"', '');
 
-          // Write the Russian translation to the output file
-          outputSink.write(' "$key": "$otherLang",\n');
+          // Write the translation to the output file
+          isLastBlock
+              ? outputSink.write(' "$key": "$otherLang"\n')
+              : outputSink.write(' "$key": "$otherLang",\n');
         } else {
           // If the block does not have the expected format, print an error
           outputSink.write('Incorrect translation file format: $block\n');
@@ -58,7 +67,7 @@ void genOther(String inputFilePath, String languageCode) {
     filefile.createSync();
 
     // Print a success message
-    print('File generated successfully: $filePath');
+    log('File generated successfully: $filePath');
   } catch (e) {
     // Handle any errors that occur during file reading/writing
     print('Error reading/writing file: $e');

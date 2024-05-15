@@ -1,6 +1,10 @@
 import 'dart:io';
 
-void genEn(String inputFilePath, String languageCode) {
+void genEn({
+  required String filePath,
+  required String languageCode,
+  required String splitElement,
+}) {
   // Get the current working directory (project directory)
   String currentPath = Directory.current.path;
   // Create a file name based on the language code
@@ -10,7 +14,7 @@ void genEn(String inputFilePath, String languageCode) {
 
   try {
     // Read the contents of the input translation file
-    var file = File(inputFilePath);
+    var file = File(filePath);
     var contents = file.readAsStringSync();
     // Split the contents into blocks based on line breaks
     var blocks = contents.split('\n');
@@ -21,10 +25,12 @@ void genEn(String inputFilePath, String languageCode) {
     outputSink.write('{\n');
 // Process each block in the translation file
     for (var block in blocks) {
+      // Check if the block is the last block in the file
+      bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
       // Check if the block is not empty
       if (block.trim().isNotEmpty) {
         // Split the block into lines based on semicolons
-        var lines = block.split(';');
+        var lines = block.split(splitElement);
         // Check if the line has the expected number of values (3)
         if (lines.length == 3) {
           // Extract key, Other language translation, and English translation
@@ -36,7 +42,7 @@ void genEn(String inputFilePath, String languageCode) {
           outputSink.write(' "$key": "$english",\n');
           outputSink.write(' "@$key": {\n');
           outputSink.write('   "description": "$otherLang"\n');
-          outputSink.write(' },\n');
+          isLastBlock ? outputSink.write(' }\n') : outputSink.write(' },\n');
         } else {
           // If the block does not have the expected format, print an error
           outputSink.write('Incorrect translation file format: $block\n');
