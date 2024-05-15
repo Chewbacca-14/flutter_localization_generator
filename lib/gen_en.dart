@@ -6,13 +6,8 @@ void genEn({
   required String splitElement,
 }) {
   // Create an empty file at the specified path
-  File filefile = File(filePath);
-  filefile.createSync();
-  var outputSink = filefile.openWrite();
 
   try {
-    // Create the file
-
     // Construct the full file path for the file gen
     String currentPath = Directory.current.path;
     String fileName = 'app_$languageCode.arb';
@@ -20,6 +15,8 @@ void genEn({
 
     // Read the contents of the input translation file
     var file = File(fullPath);
+    file.createSync();
+    var outputSink = file.openWrite();
     var contents = file.readAsStringSync();
     // Split the contents into blocks based on line breaks
     var blocks = contents.split('\n');
