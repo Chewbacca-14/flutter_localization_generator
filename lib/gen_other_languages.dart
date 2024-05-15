@@ -1,6 +1,19 @@
-import 'dart:developer';
 import 'dart:io';
 
+/// Generates an output file in ARB format based on the input translation file.
+///
+/// The generated file will contain translations for a specific language.
+/// The input translation file should have a specific format where each block
+/// represents a translation entry with three lines: key, translation, and
+/// additional information.
+///
+/// The generated file will be saved in the same directory as the input file
+/// with a file name based on the language code.
+///
+/// Parameters:
+/// - [inputFilePath] - The path to the input translation file.
+/// - [languageCode] - The language code for the translations.
+/// - [splitElement] - The element used to split the translation blocks.
 void genOther({
   required String inputFilePath,
   required String languageCode,
@@ -15,28 +28,27 @@ void genOther({
   // Construct the full file path for the output file
   String filePath = '$currentPath\\lib/$fileName';
 
+  // Read the contents of the input translation file
+  File file = File(filePath);
+  file.createSync();
+  IOSink outputSink = file.openWrite();
+  File translationfilePath = File(inputFilePath);
+  List<String> contents = translationfilePath.readAsLinesSync().toList();
+  contents.removeWhere((element) => element.isEmpty);
+  print(contents);
+
+  // Create a new output file and open a write stream
+
+  // Write the initial opening brace for the JSON object
+  outputSink.write('{\n');
   try {
-    // Read the contents of the input translation file
-    var file = File(inputFilePath);
-    var contents = file.readAsStringSync();
-
-    // Split the contents into blocks based on line breaks
-    var blocks = contents.split('\n');
-
-    // Create a new output file and open a write stream
-    var outputFile = File(filePath);
-    var outputSink = outputFile.openWrite();
-
-    // Write the initial opening brace for the JSON object
-    outputSink.write('{\n');
-
     // Process each block in the translation file
-    for (var block in blocks) {
+    for (String block in contents) {
       // Check if the block is the last block in the file
-      bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
+      bool isLastBlock = block == contents.last;
       // Check if the block is not empty
       if (block.trim().isNotEmpty) {
-        // Split the block into lines based on semicolons
+        // Split the block into lines based on the split element
         var lines = block.split(splitElement);
 
         // Check if the block has the expected number of lines (3)
@@ -51,7 +63,8 @@ void genOther({
               : outputSink.write(' "$key": "$otherLang",\n');
         } else {
           // If the block does not have the expected format, print an error
-          outputSink.write('Incorrect translation file format: $block\n');
+          outputSink.write(
+              '[Input File Error] Incorrect translation file format: $block\n');
         }
       }
     }
@@ -67,9 +80,9 @@ void genOther({
     filefile.createSync();
 
     // Print a success message
-    log('File generated successfully: $filePath');
+    print('File generated successfully: $filePath');
   } catch (e) {
     // Handle any errors that occur during file reading/writing
-    print('Error reading/writing file: $e');
+    print('[Reading/Writing File Error] $e');
   }
 }

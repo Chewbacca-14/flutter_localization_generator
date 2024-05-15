@@ -36,6 +36,7 @@ void main(List<String> arguments) {
           filePath: filePath,
           languageCode: languageCode,
           splitElement: splitElement);
+      print(filePath);
     } else if (type == 'other') {
       genOther(
           inputFilePath: filePath,

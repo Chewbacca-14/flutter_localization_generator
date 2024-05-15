@@ -1,14 +1,23 @@
 import 'dart:io';
 
+/// Generates an English translation file based on the input translation file.
+///
+/// The generated file follows the ARB (Application Resource Bundle) format.
+/// The input translation file should have each translation block separated by a [splitElement].
+/// Each translation block should have three values: key, other language translation, and English translation.
+/// The generated file will have the English translation as the value for each key, and the other language translation as the description.
+///
+/// Parameters:
+/// - [filePath] - The path to the input translation file.
+/// - [languageCode] - The language code for the generated file.
+/// - [splitElement] - The element used to split each translation block in the input file.
 void genEn({
   required String filePath,
   required String languageCode,
   required String splitElement,
 }) {
-  // Create an empty file at the specified path
-
   try {
-    // Construct the full file path for the file gen
+    // Construct the full file path for the generated file
     String currentPath = Directory.current.path;
     String fileName = 'app_$languageCode.arb';
     String fullPath = '$currentPath/lib/$fileName';
@@ -17,24 +26,26 @@ void genEn({
     var file = File(fullPath);
     file.createSync();
     var outputSink = file.openWrite();
-    var contents = file.readAsStringSync();
-    // Split the contents into blocks based on line breaks
-    var blocks = contents.split('\n');
-    // Create a new output file and open a write stream
+    var translationfilePath = File(filePath);
+    var contents = translationfilePath.readAsLinesSync().toList();
+    contents.removeWhere((element) => element.isEmpty);
 
     // Write the initial opening brace for the JSON object
     outputSink.write('{\n');
+
     // Process each block in the translation file
-    for (var block in blocks) {
+    for (var block in contents) {
       // Check if the block is the last block in the file
-      bool isLastBlock = blocks.indexOf(block) == blocks.length - 1;
+      bool isLastBlock = block == contents.last;
+
       // Check if the block is not empty
       if (block.trim().isNotEmpty) {
-        // Split the block into lines based on semicolons
+        // Split the block into lines based on the split element
         var lines = block.split(splitElement);
+
         // Check if the line has the expected number of values (3)
         if (lines.length == 3) {
-          // Extract key, Other language translation, and English translation
+          // Extract key, other language translation, and English translation
           var key = lines[0].trim().replaceAll('"', '');
           var otherLang = lines[1].trim().replaceAll('"', '');
           var english = lines[2].trim().replaceAll('"', '');
@@ -50,8 +61,10 @@ void genEn({
         }
       }
     }
+
     // Write the closing brace for the JSON object
     outputSink.write('}\n');
+
     // Close the output stream
     outputSink.close();
 
