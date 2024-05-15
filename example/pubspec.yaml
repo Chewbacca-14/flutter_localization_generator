@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  filearbgen:
+  flutter_localization_generator:
     git:
       url: https://github.com/Chewbacca-14/filearbgen.git
 
